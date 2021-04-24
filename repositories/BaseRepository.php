@@ -9,9 +9,9 @@ abstract class BaseRepository
         $this->db = $db;
     }
 
-    abstract public function add(...$args);
+    abstract public function add($entity);
 
-    public function getById()
+    public function getById(int $id)
     {
         throw new ErrorException("Not implemented");
     }

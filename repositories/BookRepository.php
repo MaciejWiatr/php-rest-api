@@ -2,7 +2,7 @@
 
 require_once("BaseRepository.php");
 
-class BookRepository
+class BookRepository extends BaseRepository
 {
     private $db;
 
@@ -11,9 +11,12 @@ class BookRepository
         $this->db = $db;
     }
 
-    public function add(Book $book)
+    /**
+     * @param Book $entity
+     */
+    public function add($entity)
     {
-        $query = ("INSERT INTO books (id,name,author,description) VALUES (null, '$book->name', '$book->author', '$book->description')");
+        $query = ("INSERT INTO books (id,name,author,description) VALUES (null, '$entity->name', '$entity->author', '$entity->description')");
         if ($this->db->query($query) === TRUE) {
             return "Book was created";
         } else {
