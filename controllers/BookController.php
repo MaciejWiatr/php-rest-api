@@ -25,7 +25,7 @@ class BookController extends BaseController
         if (!isset($data["name"]) || !isset($data["description"]) || !isset($data["author"])) {
             echo "Invalid data was provided";
         }
-        $book = new Book($data["name"], $data["description"], $data["author"]);
+        $book = new Book($data["name"], $data["author"], $data["description"]);
         echo $this->bookRepository->add($book);
     }
 
