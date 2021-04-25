@@ -1,6 +1,7 @@
 <?php
 
 require_once "controllers/BaseController.php";
+require_once "http_helpers/http_response.php";
 
 
 class Router
@@ -25,8 +26,11 @@ class Router
     {
         try {
             $request_uri = $_SERVER["REQUEST_URI"];
+            $controller_found = false;
             foreach (self::$routes as $uri => $controller) {
                 if (strpos($request_uri, $uri) !== false) {
+                    $controller_found = true;
+
                     switch ($_SERVER["REQUEST_METHOD"]) {
                         case "GET": {
                                 $controller->get();
@@ -43,11 +47,13 @@ class Router
                     }
                 }
             }
+            if (!$controller_found) {
+                http_response(404, "Not found");
+            }
         } catch (InvalidDataException $e) {
-            echo $e->getMessage();
+            http_response(400, "Bad request\n" . $e->getMessage());
         } catch (Error | Exception $e) {
-            http_response_code(400);
-            echo "Bad request\n" . $e->getMessage();
+            http_response(500, "Sever error\n" . $e->getMessage());
         }
         exit();
     }
