@@ -6,5 +6,5 @@ require_once "repositories/BookRepository.php";
 
 $bookRepository = new BookRepository($connection);
 
-Router::register('/book/', new BookController($bookRepository));
+Router::register('/book', new BookController($bookRepository));
 Router::run();
