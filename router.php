@@ -1,7 +1,6 @@
 <?php
 
 require_once "controllers/BaseController.php";
-require_once "handlers/errorHandler.php";
 
 
 class Router
@@ -11,7 +10,7 @@ class Router
     public static function register(string $uri, BaseController $controller)
     {
         if (array_key_exists($uri, self::$routes)) {
-            throw new ErrorException("Cannot register two controllers to the same uri");
+            throw new ErrorException("Cannot register two controllers with the same uri");
         } else {
             self::$routes[$uri] = $controller;
         }
@@ -19,18 +18,13 @@ class Router
 
     public static function run()
     {
-        set_error_handler("myErrorHandler");
         try {
             $request_uri = $_SERVER["REQUEST_URI"];
             foreach (self::$routes as $uri => $controller) {
                 if (strpos($request_uri, $uri) !== false) {
                     switch ($_SERVER["REQUEST_METHOD"]) {
                         case "GET": {
-                                if (isset($_GET["id"])) {
-                                    $controller->getById($_GET["id"]);
-                                } else {
-                                    $controller->get();
-                                }
+                                $controller->get();
                                 break;
                             }
                         case "POST": {
@@ -38,7 +32,7 @@ class Router
                                 break;
                             }
                         default: {
-                                throw new ErrorException("Method not supported");
+                                echo "Method not supported";
                                 break;
                             }
                     }
@@ -46,9 +40,12 @@ class Router
                     echo "404 Not found";
                 }
             }
+        } catch (InvalidDataException $e) {
+            echo $e->getMessage();
         } catch (Error | Exception $e) {
-            echo "Error occured";
-            exit();
+            http_response_code(400);
+            echo "Bad request\n" . $e->getMessage();
         }
+        exit();
     }
 }
