@@ -39,7 +39,7 @@ CREATE TABLE `books` (
 --
 
 INSERT INTO `books` (`id`, `name`, `author`, `description`) VALUES
-(5, 'Harry Potter', 'J.K Rowling', 'Haha różdżki robią brr');
+(1, 'Harry Potter', 'J.K Rowling', 'Haha różdżki robią brr');
 
 --
 -- Indeksy dla zrzutów tabel
