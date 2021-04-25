@@ -3,19 +3,7 @@
 
 abstract class BaseController
 {
-    public function run()
-    {
-    }
+    abstract public function get();
 
-    public function get()
-    {
-    }
-
-    public function getById(int $id)
-    {
-    }
-
-    public function post()
-    {
-    }
+    abstract function post();
 };

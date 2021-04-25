@@ -1,6 +1,9 @@
 <?php
 
 require_once(__DIR__ . "/../models/Book.php");
+require_once(__DIR__ . "/../exceptions/InvalidDataException.php");
+require_once(__DIR__ . "/../http_helpers/http_response.php");
+require_once(__DIR__ . "/../http_helpers/get_json_request.php");
 
 class BookController extends BaseController
 {
@@ -14,24 +17,28 @@ class BookController extends BaseController
 
     public function get()
     {
-        $result = $this->bookRepository->getAll();
-        echo json_encode($result);
+        if (isset($_GET["id"])) {
+            $result = $this->bookRepository->getById($_GET["id"]);
+        } else {
+            $result = $this->bookRepository->getAll();
+        }
+        if (!$result) {
+            http_response(404, "Not found");
+        }
+        http_response(200, $result);
     }
 
     public function post()
     {
-        $inputJSON = file_get_contents('php://input');
-        $data = json_decode($inputJSON, TRUE);
+        $data = get_json_request();
         if (!isset($data["name"]) || !isset($data["description"]) || !isset($data["author"])) {
-            echo "Invalid data was provided";
+            throw new InvalidDataException("Invalid data was provided");
         }
         $book = new Book($data["name"], $data["author"], $data["description"]);
-        echo $this->bookRepository->add($book);
-    }
-
-    public function getById(int $id)
-    {
-        $result = $this->bookRepository->getById($id);
-        echo json_encode($result);
+        $result = $this->bookRepository->add($book);
+        if (!$result) {
+            http_response(400, "Bad request");
+        }
+        http_response(200, "Book was created successfully");
     }
 };
