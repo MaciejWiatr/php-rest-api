@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 24 Kwi 2021, 22:09
+-- Czas generowania: 25 Kwi 2021, 20:55
 -- Wersja serwera: 10.4.18-MariaDB
 -- Wersja PHP: 7.4.16
 
@@ -39,7 +39,8 @@ CREATE TABLE `books` (
 --
 
 INSERT INTO `books` (`id`, `name`, `author`, `description`) VALUES
-(1, 'Harry Potter', 'J.K Rowling', 'Haha różdżki robią brr');
+(1, 'Harry Potter', 'J.K Rowling', 'seria siedmiu powieści fantasy autorstwa brytyjskiej pisarki J.K. Rowling, wydawanych od 1997 do 2007 roku. Cykl przedstawia świat magii'),
+(2, 'Metro 2033', 'Dimitryj głuchowski', 'rosyjska powieść postapokaliptyczna napisana przez Dmitrija Głuchowskiego, pierwsza część trylogii. Akcja powieści rozgrywa się w moskiewskim metrze w 2033 roku');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -59,7 +60,7 @@ ALTER TABLE `books`
 -- AUTO_INCREMENT dla tabeli `books`
 --
 ALTER TABLE `books`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
