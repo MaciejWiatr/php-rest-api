@@ -11,7 +11,6 @@ class BookController extends BaseController
 
     public function __construct(BookRepository $bookRepository)
     {
-        header('Content-Type: application/json');
         $this->bookRepository = $bookRepository;
     }
 

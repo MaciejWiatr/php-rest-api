@@ -7,6 +7,11 @@ class Router
 {
     private static array $routes = array();
 
+    public static function enableJson()
+    {
+        header('Content-Type: application/json');
+    }
+
     public static function register(string $uri, BaseController $controller)
     {
         if (array_key_exists($uri, self::$routes)) {
@@ -36,8 +41,6 @@ class Router
                                 break;
                             }
                     }
-                } else {
-                    echo "404 Not found";
                 }
             }
         } catch (InvalidDataException $e) {
