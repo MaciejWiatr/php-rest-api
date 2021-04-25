@@ -14,14 +14,10 @@ class BookRepository extends BaseRepository
     /**
      * @param Book $entity
      */
-    public function add($entity)
+    public function add($entity): bool
     {
         $query = ("INSERT INTO books (id,name,author,description) VALUES (null, '$entity->name', '$entity->author', '$entity->description')");
-        if ($this->db->query($query) === TRUE) {
-            return "Book was created";
-        } else {
-            return "Book wasn't created";
-        }
+        return $this->db->query($query) === TRUE;
     }
 
     public function getById(int $id)
@@ -32,7 +28,7 @@ class BookRepository extends BaseRepository
             $rows = $result->fetch_assoc();
             return new Book($rows["name"], $rows["author"], $rows["description"]);
         } else {
-            return "No results was found";
+            return null;
         }
     }
 
@@ -48,12 +44,7 @@ class BookRepository extends BaseRepository
             }
             return $books;
         } else {
-            return "No results was found";
+            return null;
         }
-    }
-
-    public function remove()
-    {
-        throw new ErrorException("Not implemented");
     }
 }
