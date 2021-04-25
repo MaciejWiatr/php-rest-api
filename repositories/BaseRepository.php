@@ -4,10 +4,7 @@ abstract class BaseRepository
 {
     private $db;
 
-    public function __construct($db)
-    {
-        $this->db = $db;
-    }
+    abstract public function __construct($db);
 
     abstract public function add($entity);
 
